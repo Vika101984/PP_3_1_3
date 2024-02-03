@@ -65,7 +65,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public void deleteUser(long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
-            //Удаляем связанные роли пользователя из user_roles
             user.getRoles().clear();
             userRepository.deleteById(id);
         }

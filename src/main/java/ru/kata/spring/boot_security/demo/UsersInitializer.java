@@ -25,9 +25,9 @@ public class UsersInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         roleRepository.saveAll(Set.of(new Role("ROLE_ADMIN"), new Role("ROLE_USER")));
 
-        userService.addNewUser(List.of("ROLE_USER", "ROLE_ADMIN"), new User("admin", 45, "admin"));
+        userService.addNewUser(List.of("ROLE_USER", "ROLE_ADMIN"), new User("admin", 35, "admin"));
 
-        userService.addNewUser(List.of("ROLE_USER"), new User("user",66, "user"));
+        userService.addNewUser(List.of("ROLE_USER"), new User("user",25, "user"));
     }
 }
 
