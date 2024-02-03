@@ -27,15 +27,9 @@ public class User implements UserDetails {
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+
     private Set<Role> roles = new HashSet<>();
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 
     public User() {
     }
@@ -57,6 +51,24 @@ public class User implements UserDetails {
     public String getUsername() {
         return username;
     }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -77,19 +89,13 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public int getAge() {
-        return age;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> roles = new HashSet<>();
@@ -98,15 +104,6 @@ public class User implements UserDetails {
         }
         return roles;
     }
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public String toString() {
         return "User{" +
