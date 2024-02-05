@@ -11,7 +11,7 @@ public interface UserService {
 
     void addNewUser(List<String> roles, User saveUser);
 
-    void updateUser(String role, User updateUser);
+    void updateUser(List<String> roles, User updateUser);
 
     void deleteUser(long id);
 

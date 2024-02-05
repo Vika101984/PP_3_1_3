@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -27,36 +28,36 @@ public class AdminController {
 
 
     @GetMapping("/admin")
-    public String showAllUsers(ModelMap modelMap, Principal principal) {
+    public String showAllUsers(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         String userRoles = userService.getUserRoles(user);
-        modelMap.addAttribute("user", user);
-        modelMap.addAttribute("userRoles", userRoles);
+        model.addAttribute("user", user);
+        model.addAttribute("userRoles", userRoles);
 
         Map<User, String> usersWithRoles = userService.getAllUsersWithRoles();
-        modelMap.addAttribute("usersWithRoles", usersWithRoles);
+        model.addAttribute("usersWithRoles", usersWithRoles);
 
         return "admin";
     }
 
     @PostMapping(value = "/admin/addUser")
     public String addNewUser(@RequestParam("role") List<String> roles, @ModelAttribute("user") User user) {
-        userService.addNewUser(roles,user);
+        userService.addNewUser(roles, user);
         return "redirect:/admin";
     }
 
     @GetMapping("/admin/updateUser")
-    public String editUserForm(@RequestParam("id") Long id, ModelMap modelMap) {
+    public String editUserForm(@RequestParam("id") Long id, Model model) {
         User userUpdate = userService.findById(id).orElse(null);
         List<Role> roles = roleService.findAll();
-        modelMap.addAttribute("user", userUpdate);
-        modelMap.addAttribute("listRoles", roles);
+        model.addAttribute("user", userUpdate);
+        model.addAttribute("listRoles", roles);
         return "admin";
     }
 
     @PostMapping(value = "/admin/updateUser")
-    public String updateUser(@RequestParam("role") String role, @ModelAttribute("user") User user) {
-        userService.updateUser(role ,user);
+    public String updateUser(@RequestParam("role") List<String> roles, @ModelAttribute("user") User user) {
+        userService.updateUser(roles, user);
         return "redirect:/admin";
     }
 

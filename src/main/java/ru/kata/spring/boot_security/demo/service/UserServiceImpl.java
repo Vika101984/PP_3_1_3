@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public void addNewUser(List<String> roles,User saveUser) {
+    public void addNewUser(List<String> roles, User saveUser) {
         for (String role : roles) {
             Role role1 = roleRepository.findByRole(role);
             saveUser.getRoles().add(role1);
@@ -54,9 +54,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     @Transactional
-    public void updateUser(String role,User updateUser) {
-        Role role1 = roleRepository.findByRole(role);
-        updateUser.getRoles().add(role1);
+    public void updateUser(List<String> roles, User updateUser) {
+        for (String roleName : roles) {
+            Role role1 = roleRepository.findByRole(roleName);
+            updateUser.getRoles().add(role1);
+        }
         userRepository.save(updateUser);
     }
 
@@ -93,7 +95,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public Map<User, String> getAllUsersWithRoles() {
         return userRepository.findAll(Sort.by("id")).stream()
                 .collect(Collectors.toMap(user -> user, this::getUserRoles,
-                        (oldValue,newValue) -> oldValue, LinkedHashMap::new));
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 
 }
